@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>⚠ Virus Alert ⚠</title>
+  <style>
+    body {
+      background-color: black;
+      color: red;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
+    h1 {
+      font-size: 3em;
+      animation: blink 1s infinite;
+    }
+    p {
+      font-size: 1.5em;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>⚠ VIRUS DETECTED ⚠</h1>
+  <p>Your phone is infected!</p>
+  <p>Sending all photos to the cloud...</p>
+  <p style="color: yellow;">Press the power button to stop the attack.</p>
+  <script>
+    let count = 5;
+    const p = document.createElement("p");
+    document.body.appendChild(p);
+
+    setInterval(() => {
+      p.textContent = "Deleting system in " + count + " seconds...";
+      count--;
+      if (count < 0) {
+        p.textContent = "Just kidding 😂 – you’ve been pranked!";
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
