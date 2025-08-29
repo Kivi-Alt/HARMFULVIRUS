@@ -34,7 +34,7 @@
       height: 100%;
       width: 0;
       background: red;
-      transition: width 0.4s;
+      transition: width 0.2s;
     }
     .popup {
       position: absolute;
@@ -46,6 +46,7 @@
       max-width: 60vw;
       animation: flicker 0.2s infinite;
       z-index: 999;
+      pointer-events: none;
     }
     @keyframes flicker {
       0% { opacity: 1; }
@@ -67,22 +68,21 @@
     let width = 0;
     const bar = document.getElementById("bar");
     const interval = setInterval(() => {
-      width += Math.random() * 15;
+      width += Math.random() * 20;
       bar.style.width = width + "%";
       if (width >= 100) {
         clearInterval(interval);
         setTimeout(() => {
-          // Redirect to Rickroll video
           window.location.href = "https://youtu.be/dQw4w9WgXcQ?si=eTjD3SipfKP_idj9&autoplay=1";
         }, 3000);
       }
-    }, 600);
+    }, 500);
 
     // Chaotic background flashing
     setInterval(() => {
       document.body.style.background =
         document.body.style.background === "black" ? "darkred" : "black";
-    }, 400);
+    }, 300);
 
     // Random popup messages
     const messages = [
@@ -93,21 +93,27 @@
       "Firewall disabled!",
       "Banking info compromised!",
       "System overheating...",
-      "Malware spreading..."
+      "Malware spreading...",
+      "Critical error: Device unstable!",
+      "Warning: SIM card cloning in progress..."
     ];
 
     function createPopup() {
       const popup = document.createElement("div");
       popup.className = "popup";
       popup.textContent = messages[Math.floor(Math.random() * messages.length)];
-      popup.style.top = Math.random() * (window.innerHeight - 100) + "px";
-      popup.style.left = Math.random() * (window.innerWidth - 150) + "px";
+      popup.style.top = Math.random() * (window.innerHeight - 80) + "px";
+      popup.style.left = Math.random() * (window.innerWidth - 180) + "px";
       document.body.appendChild(popup);
 
-      setTimeout(() => popup.remove(), 4000);
+      // Let them linger longer so they overlap like crazy
+      setTimeout(() => popup.remove(), 7000);
     }
 
-    setInterval(createPopup, 900);
+    // Spam popups VERY fast
+    setInterval(() => {
+      for (let i = 0; i < 3; i++) createPopup();
+    }, 300);
   </script>
 </body>
 </html>
