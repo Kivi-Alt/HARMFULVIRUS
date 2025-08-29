@@ -5,42 +5,94 @@
   <title>⚠ Virus Alert ⚠</title>
   <style>
     body {
-      background-color: black;
+      margin: 0;
+      height: 100vh;
+      background: black;
       color: red;
       font-family: monospace;
+      overflow: hidden;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 50px;
     }
     h1 {
       font-size: 3em;
-      animation: blink 1s infinite;
-    }
-    p {
-      font-size: 1.5em;
+      animation: blink 0.7s infinite;
     }
     @keyframes blink {
       0%, 50% { opacity: 1; }
       51%, 100% { opacity: 0; }
     }
+    #progress {
+      width: 80%;
+      margin: 20px auto;
+      border: 2px solid red;
+      height: 30px;
+      position: relative;
+    }
+    #bar {
+      height: 100%;
+      width: 0;
+      background: red;
+    }
+    .popup {
+      position: absolute;
+      background: black;
+      border: 2px solid red;
+      color: lime;
+      padding: 10px;
+      font-size: 1em;
+      animation: flicker 0.2s infinite;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
   <h1>⚠ VIRUS DETECTED ⚠</h1>
-  <p>Your phone is infected!</p>
-  <p>Sending all photos to the cloud...</p>
-  <p style="color: yellow;">Press the power button to stop the attack.</p>
-  <script>
-    let count = 5;
-    const p = document.createElement("p");
-    document.body.appendChild(p);
+  <p>System scan in progress...</p>
 
-    setInterval(() => {
-      p.textContent = "Deleting system in " + count + " seconds...";
-      count--;
-      if (count < 0) {
-        p.textContent = "Just kidding 😂 – you’ve been pranked!";
+  <div id="progress">
+    <div id="bar"></div>
+  </div>
+
+  <script>
+    // Fake progress bar
+    let width = 0;
+    const bar = document.getElementById("bar");
+    const interval = setInterval(() => {
+      width += Math.random() * 10;
+      bar.style.width = width + "%";
+      if (width >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          document.body.innerHTML = "<h1 style='color:lime;'>😂 Just kidding – you’ve been pranked! 😂</h1>";
+          document.body.style.background = "black";
+        }, 2000);
       }
-    }, 1000);
+    }, 500);
+
+    // Chaotic background flashing
+    setInterval(() => {
+      document.body.style.background =
+        document.body.style.background === "black" ? "darkred" : "black";
+    }, 300);
+
+    // Random popup windows
+    function createPopup() {
+      const popup = document.createElement("div");
+      popup.className = "popup";
+      popup.textContent = "WARNING! VIRUS DETECTED!";
+      popup.style.top = Math.random() * (window.innerHeight - 50) + "px";
+      popup.style.left = Math.random() * (window.innerWidth - 150) + "px";
+      document.body.appendChild(popup);
+
+      setTimeout(() => popup.remove(), 4000);
+    }
+
+    setInterval(createPopup, 800);
   </script>
 </body>
 </html>
